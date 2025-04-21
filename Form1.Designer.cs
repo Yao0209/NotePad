@@ -37,19 +37,20 @@
             // 
             // rtbText
             // 
-            this.rtbText.Location = new System.Drawing.Point(12, 116);
+            this.rtbText.BackColor = System.Drawing.SystemColors.Window;
+            this.rtbText.Location = new System.Drawing.Point(24, 122);
             this.rtbText.Name = "rtbText";
-            this.rtbText.Size = new System.Drawing.Size(1236, 668);
+            this.rtbText.Size = new System.Drawing.Size(1224, 662);
             this.rtbText.TabIndex = 0;
             this.rtbText.Text = "";
             // 
             // btnOpen
             // 
             this.btnOpen.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnOpen.Font = new System.Drawing.Font("標楷體", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnOpen.Location = new System.Drawing.Point(123, 22);
+            this.btnOpen.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnOpen.Location = new System.Drawing.Point(105, 12);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(158, 70);
+            this.btnOpen.Size = new System.Drawing.Size(212, 88);
             this.btnOpen.TabIndex = 1;
             this.btnOpen.Text = "開啟檔案";
             this.btnOpen.UseVisualStyleBackColor = true;
@@ -61,14 +62,16 @@
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.Red;
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnSave.Font = new System.Drawing.Font("標楷體", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnSave.Location = new System.Drawing.Point(381, 22);
+            this.btnSave.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnSave.Location = new System.Drawing.Point(495, 12);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(158, 70);
+            this.btnSave.Size = new System.Drawing.Size(214, 88);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "存檔";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // Form1

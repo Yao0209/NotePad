@@ -42,10 +42,11 @@ namespace NotePad
                     // 使用者在OpenFileDialog選擇的檔案
                     string selectedFileName = openFileDialog1.FileName;
 
-                    /*// 第一種作法:使用 FileStream 打開檔案 (手動開關資源，基本概念)
-                         建立一個檔案資料流，並且設定檔案名稱與檔案開啟模式為「開啟檔案」
+                    /*
+                      // 第一種作法:使用 FileStream 打開檔案 (手動開關資源，基本概念)
+                      // 建立一個檔案資料流，並且設定檔案名稱與檔案開啟模式為「開啟檔案」
                       FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read);
-                      // 讀取資料流
+                     // 讀取資料流
                       StreamReader streamReader = new StreamReader(fileStream);
                      // 將檔案內容顯示到 RichTextBox 中
                       rtbText.Text = streamReader.ReadToEnd();
@@ -65,7 +66,8 @@ namespace NotePad
                         }
                     }
 
-                    /* // 第三種作法:更為簡單的做法，將檔案內容顯示到 RichTextBox 中 (最簡潔的方式)
+                    /* 
+                      // 第三種作法:更為簡單的做法，將檔案內容顯示到 RichTextBox 中 (最簡潔的方式)
                       string fileContent = File.ReadAllText(selectedFileName);
                       rtbText.Text = fileContent;
                     */
