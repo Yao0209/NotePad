@@ -69,7 +69,8 @@ namespace NotePad
                     //rtbText.Text = fileContent;
                 }
                 catch (Exception ex)
-                {
+                {   //MessageBox的語法：MessageBox.Show(要顯示的訊息, 視窗標題, 按鍵組合, 小圖示, 預設按鍵);
+
                     // 如果發生錯誤，用MessageBox顯示錯誤訊息
                     MessageBox.Show("讀取檔案時發生錯誤: " + ex.Message, "錯誤訊息", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
