@@ -42,18 +42,19 @@ namespace NotePad
                     // 使用者在OpenFileDialog選擇的檔案
                     string selectedFileName = openFileDialog1.FileName;
 
-                    //// 使用 FileStream 打開檔案
-                    //// 建立一個檔案資料流，並且設定檔案名稱與檔案開啟模式為「開啟檔案」
-                    //FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read);
-                    //// 讀取資料流
-                    //StreamReader streamReader = new StreamReader(fileStream);
-                    //// 將檔案內容顯示到 RichTextBox 中
-                    //rtbText.Text = streamReader.ReadToEnd();
-                    //// 關閉資料流與讀取資料流
-                    //fileStream.Close();
-                    //streamReader.Close();
+                    /*// 第一種作法:使用 FileStream 打開檔案 (手動開關資源，基本概念)
+                         建立一個檔案資料流，並且設定檔案名稱與檔案開啟模式為「開啟檔案」
+                      FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read);
+                      // 讀取資料流
+                      StreamReader streamReader = new StreamReader(fileStream);
+                     // 將檔案內容顯示到 RichTextBox 中
+                      rtbText.Text = streamReader.ReadToEnd();
+                     // 關閉資料流與讀取資料流
+                      fileStream.Close();
+                      streamReader.Close();
+                    */
 
-                    // 使用 using 與 FileStream 打開檔案
+                    // 第二種作法:使用 using 與 FileStream 打開檔案 使用 (using 語法可以自動管理資源，較通用)
                     using (FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read))
                     {
                         // 使用 StreamReader 讀取檔案內容
@@ -64,9 +65,10 @@ namespace NotePad
                         }
                     }
 
-                    //// 更為簡單的做法，將檔案內容顯示到 RichTextBox 中
-                    //string fileContent = File.ReadAllText(selectedFileName);
-                    //rtbText.Text = fileContent;
+                    /* // 第三種作法:更為簡單的做法，將檔案內容顯示到 RichTextBox 中 (最簡潔的方式)
+                      string fileContent = File.ReadAllText(selectedFileName);
+                      rtbText.Text = fileContent;
+                    */
                 }
                 catch (Exception ex)
                 {   //MessageBox的語法：MessageBox.Show(要顯示的訊息, 視窗標題, 按鍵組合, 小圖示, 預設按鍵);
