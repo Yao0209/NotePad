@@ -21,7 +21,7 @@ namespace NotePad
         // 全域變數
         private Stack<string> textHistory = new Stack<string>();
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
-       
+        private bool isUndo = false; // 是否為撤銷操作
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
