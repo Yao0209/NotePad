@@ -104,7 +104,7 @@ namespace NotePad
             DialogResult result = saveFileDialog1.ShowDialog();
 
             //建立 FileStream 物件
-            FileStream fileStream = null;
+            FileStream fileStream = null;  // null:在記憶體裡面先建立一個fileStream變數空間
 
             // 檢查使用者是否選擇了檔案
             if (result == DialogResult.OK)
@@ -117,7 +117,7 @@ namespace NotePad
                     // 使用 FileStream 建立檔案，如果檔案已存在則覆寫
                     fileStream = new FileStream(saveFileName, FileMode.Create, FileAccess.Write);
                     // 將 RichTextBox 中的文字寫入檔案中
-                    byte[] data = Encoding.UTF8.GetBytes(rtbText.Text);
+                    byte[] data = Encoding.UTF8.GetBytes(rtbText.Text);  // rtbText轉換為UTF8，接著在寫入data
                     fileStream.Write(data, 0, data.Length);
 
                     //// 使用 using 與 FileStream 建立檔案，如果檔案已存在則覆寫
@@ -138,7 +138,7 @@ namespace NotePad
                     // 如果發生錯誤，用 MessageBox 顯示錯誤訊息
                     MessageBox.Show("儲存檔案時發生錯誤: " + ex.Message, "錯誤訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                finally
+                finally // 定義:finally區塊無論try區塊是否發生錯誤都會執行程式碼
                 {
                     // 關閉資源，如果使用 using 或者直接以 File.WriteAllText 儲存文字檔，可以不需要。
                     fileStream.Close();
