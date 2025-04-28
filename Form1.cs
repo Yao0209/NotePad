@@ -21,6 +21,7 @@ namespace NotePad
         // 全域變數
         private Stack<string> textHistory = new Stack<string>();
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
+        private bool isUndo = false; // 是否為撤銷操作
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
@@ -156,26 +157,30 @@ namespace NotePad
 
         private void rtbText_TextChanged(object sender, EventArgs e)
         {
-            // 將當前的文本內容加入堆疊
-            textHistory.Push(rtbText.Text);
-
-            // 確保堆疊中只保留最多10個紀錄
-            if (textHistory.Count > MaxHistoryCount)
+            // 只有當isUndo這個變數是false的時候，才能堆疊文字編輯紀錄
+            if (isUndo == false)
             {
-                // 用一個臨時堆疊，將除了最下面一筆的文字記錄之外，將文字紀錄堆疊由上而下，逐一移除再堆疊到臨時堆疊之中
-                Stack<string> tempStack = new Stack<string>();
-                for (int i = 0; i < MaxHistoryCount; i++)   // 使用for迴圈
+                // 將當前的文本內容加入堆疊
+                textHistory.Push(rtbText.Text);
+
+                // 確保堆疊中只保留最多10個紀錄
+                if (textHistory.Count > MaxHistoryCount)
                 {
-                    tempStack.Push(textHistory.Pop());
+                    // 用一個臨時堆疊，將除了最下面一筆的文字記錄之外，將文字紀錄堆疊由上而下，逐一移除再堆疊到臨時堆疊之中
+                    Stack<string> tempStack = new Stack<string>();
+                    for (int i = 0; i < MaxHistoryCount; i++)
+                    {
+                        tempStack.Push(textHistory.Pop());
+                    }
+                    textHistory.Clear(); // 清空堆疊
+                                         // 文字編輯堆疊紀錄清空之後，再將暫存堆疊（tempStack）中的資料，逐一放回到文字編輯堆疊紀錄
+                    foreach (string item in tempStack)
+                    {
+                        textHistory.Push(item);
+                    }
                 }
-                textHistory.Clear(); // 清空堆疊
-                                     // 文字編輯堆疊紀錄清空之後，再將暫存堆疊（tempStack）中的資料，逐一放回到文字編輯堆疊紀錄
-                foreach (string item in tempStack)  
-                {
-                    textHistory.Push(item);
-                }
+                UpdateListBox(); // 更新 ListBox
             }
-            UpdateListBox(); // 更新 ListBox          
         }
 
         // 更新 ListBox
