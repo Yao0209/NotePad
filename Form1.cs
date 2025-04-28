@@ -37,10 +37,11 @@ namespace NotePad
             // 檢查使用者是否選擇了檔案
             if (result == DialogResult.OK)
             {
+                // try-catch語法:當程式碼執行到try區塊時，若發生錯誤狀況，則會跳到catch區塊執行
                 try
                 {
                     // 使用者在OpenFileDialog選擇的檔案
-                    string selectedFileName = openFileDialog1.FileName;
+                    string selectedFileName = openFileDialog1.FileName;  // 取得選擇的檔案位置
 
                     /*
                       // 第一種作法:使用 FileStream 打開檔案 (手動開關資源，基本概念)
@@ -55,7 +56,7 @@ namespace NotePad
                       streamReader.Close();
                     */
 
-                    // 第二種作法:使用 using 與 FileStream 打開檔案 使用 (using 語法可以自動管理資源，較通用)
+                    // 第二種作法:使用 using 與 FileStream 打開檔案 使用 (using 語法可以自動管理資源，較通用)，using語法會自動關閉資源 = Close
                     using (FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read))
                     {
                         // 使用 StreamReader 讀取檔案內容
@@ -81,6 +82,8 @@ namespace NotePad
             }
             else
             {
+                // MessageBox顯示使用者關閉後的物件方塊，方塊介面可做更改
+                // MessageBox.Show(要顯示的訊息, 視窗標題, 按鍵組合, 小圖示, 預設按鍵);
                 MessageBox.Show("使用者取消了選擇檔案操作。", "訊息", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
             }
         }
