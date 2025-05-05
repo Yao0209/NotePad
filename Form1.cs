@@ -217,31 +217,30 @@ namespace NotePad
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
-            isUndo = true;
-            if (textHistory.Count > 1)
+            if (undoStack.Count > 1)
             {
-                textHistory.Pop(); // 移除當前的文本內容
-                rtbText.Text = textHistory.Peek(); // 將堆疊頂部的文本內容設置為當前的文本內容                
-            }
-            UpdateListBox(); // 更新 ListBox
-
-            isUndo = false;
-
-            /*使用 List<string>
-            isUndo = true;
-
-            if (textHistory.Count > 1)
-            {
-                // 移除目前的內容（最後一筆）
-                textHistory.RemoveAt(textHistory.Count - 1);
-
-                // 還原為上一筆內容
-                rtbText.Text = textHistory[^1]; // C# 8.0+ 語法，相當於 textHistory[textHistory.Count - 1]
+                isUndoRedo = true;
+                redoStack.Push(undoStack.Pop()); // 將回復堆疊最上面的紀錄移出，再堆到重作堆疊
+                rtbText.Text = undoStack.Peek(); // 將回復堆疊最上面一筆紀錄顯示
+                UpdateListBox();
+                isUndoRedo = false;
             }
 
-            UpdateListBox();
-            isUndo = false;
-            */
+                /*使用 List<string>
+                isUndo = true;
+
+                if (textHistory.Count > 1)
+                {
+                    // 移除目前的內容（最後一筆）
+                    textHistory.RemoveAt(textHistory.Count - 1);
+
+                    // 還原為上一筆內容
+                    rtbText.Text = textHistory[^1]; // C# 8.0+ 語法，相當於 textHistory[textHistory.Count - 1]
+                }
+
+                UpdateListBox();
+                isUndo = false;
+                */
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
