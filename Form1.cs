@@ -21,7 +21,7 @@ namespace NotePad
         // 全域變數
         private Stack<string> textHistory = new Stack<string>();
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
-        private bool isUndo = false; // 是否為撤銷操作
+        private bool isUndoRedo = false; // 是否為撤銷操作
         /*
           第二種方法使用:List<string>
         private List<string> textHistory = new List<string>();
