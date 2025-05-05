@@ -22,6 +22,12 @@ namespace NotePad
         private Stack<string> textHistory = new Stack<string>();
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
         private bool isUndo = false; // 是否為撤銷操作
+        /*
+          第二種方法使用:List<string>
+        private List<string> textHistory = new List<string>();
+        private const int MaxHistoryCount = 10;
+        private bool isUndo = false;
+        */
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
@@ -180,6 +186,20 @@ namespace NotePad
                     }
                 }
                 UpdateListBox(); // 更新 ListBox
+
+              /*使用 List<string>
+              if (!isUndo)
+              {
+                  textHistory.Add(rtbText.Text);
+
+                  // 超過最大筆數時，移除最舊的一筆（第一筆）
+                  if (textHistory.Count > MaxHistoryCount)
+                  {
+                      textHistory.RemoveAt(0);
+                  }
+
+                  UpdateListBox();
+             */
             }
         }
 
@@ -206,6 +226,22 @@ namespace NotePad
             UpdateListBox(); // 更新 ListBox
 
             isUndo = false;
+
+            /*使用 List<string>
+            isUndo = true;
+
+            if (textHistory.Count > 1)
+            {
+                // 移除目前的內容（最後一筆）
+                textHistory.RemoveAt(textHistory.Count - 1);
+
+                // 還原為上一筆內容
+                rtbText.Text = textHistory[^1]; // C# 8.0+ 語法，相當於 textHistory[textHistory.Count - 1]
+            }
+
+            UpdateListBox();
+            isUndo = false;
+            */
         }
     } 
 }

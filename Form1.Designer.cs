@@ -40,6 +40,7 @@
             // rtbText
             // 
             this.rtbText.BackColor = System.Drawing.SystemColors.Window;
+            this.rtbText.Font = new System.Drawing.Font("標楷體", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.rtbText.Location = new System.Drawing.Point(6, 106);
             this.rtbText.Name = "rtbText";
             this.rtbText.Size = new System.Drawing.Size(945, 678);
@@ -79,11 +80,12 @@
             // 
             // listUndo
             // 
+            this.listUndo.Font = new System.Drawing.Font("標楷體", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.listUndo.FormattingEnabled = true;
-            this.listUndo.ItemHeight = 24;
+            this.listUndo.ItemHeight = 29;
             this.listUndo.Location = new System.Drawing.Point(971, 106);
             this.listUndo.Name = "listUndo";
-            this.listUndo.Size = new System.Drawing.Size(301, 676);
+            this.listUndo.Size = new System.Drawing.Size(301, 671);
             this.listUndo.TabIndex = 3;
             // 
             // btnUndo
