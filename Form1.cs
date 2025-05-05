@@ -243,6 +243,11 @@ namespace NotePad
             isUndo = false;
             */
         }
+
+        private void btnRedo_Click(object sender, EventArgs e)
+        {
+
+        }
     } 
 }
 

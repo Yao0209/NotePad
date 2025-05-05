@@ -35,6 +35,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.listUndo = new System.Windows.Forms.ListBox();
             this.btnUndo = new System.Windows.Forms.Button();
+            this.btnRedo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rtbText
@@ -52,9 +53,9 @@
             // 
             this.btnOpen.DialogResult = System.Windows.Forms.DialogResult.Retry;
             this.btnOpen.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnOpen.Location = new System.Drawing.Point(74, 12);
+            this.btnOpen.Location = new System.Drawing.Point(12, 12);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(212, 88);
+            this.btnOpen.Size = new System.Drawing.Size(212, 72);
             this.btnOpen.TabIndex = 1;
             this.btnOpen.Text = "開啟檔案";
             this.btnOpen.UseVisualStyleBackColor = true;
@@ -70,9 +71,9 @@
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Retry;
             this.btnSave.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnSave.Location = new System.Drawing.Point(371, 12);
+            this.btnSave.Location = new System.Drawing.Point(245, 12);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(214, 88);
+            this.btnSave.Size = new System.Drawing.Size(214, 72);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "存檔";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -92,19 +93,32 @@
             // 
             this.btnUndo.DialogResult = System.Windows.Forms.DialogResult.Retry;
             this.btnUndo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnUndo.Location = new System.Drawing.Point(656, 12);
+            this.btnUndo.Location = new System.Drawing.Point(484, 18);
             this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(222, 88);
+            this.btnUndo.Size = new System.Drawing.Size(222, 60);
             this.btnUndo.TabIndex = 4;
             this.btnUndo.Text = "復原上一步";
             this.btnUndo.UseVisualStyleBackColor = true;
             this.btnUndo.Click += new System.EventHandler(this.btnUndo_Click);
+            // 
+            // btnRedo
+            // 
+            this.btnRedo.DialogResult = System.Windows.Forms.DialogResult.Retry;
+            this.btnRedo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnRedo.Location = new System.Drawing.Point(729, 18);
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.Size = new System.Drawing.Size(222, 60);
+            this.btnRedo.TabIndex = 5;
+            this.btnRedo.Text = "重做下一步";
+            this.btnRedo.UseVisualStyleBackColor = true;
+            this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1274, 796);
+            this.Controls.Add(this.btnRedo);
             this.Controls.Add(this.btnUndo);
             this.Controls.Add(this.listUndo);
             this.Controls.Add(this.btnSave);
@@ -125,6 +139,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ListBox listUndo;
         private System.Windows.Forms.Button btnUndo;
+        private System.Windows.Forms.Button btnRedo;
     }
 }
 
