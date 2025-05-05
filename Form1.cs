@@ -164,43 +164,43 @@ namespace NotePad
         private void rtbText_TextChanged(object sender, EventArgs e)
         {
             // 只有當isUndo這個變數是false的時候，才能堆疊文字編輯紀錄
-            if (isUndo == false)
+            if (isUndoRedo == false)
             {
-                // 將當前的文本內容加入堆疊
-                textHistory.Push(rtbText.Text);
+                undoStack.Push(rtbText.Text); // 將當前的文本內容加入堆疊
+                redoStack.Clear();            // 清空重作堆疊
 
                 // 確保堆疊中只保留最多10個紀錄
-                if (textHistory.Count > MaxHistoryCount)
+                if (undoStack.Count > MaxHistoryCount)
                 {
                     // 用一個臨時堆疊，將除了最下面一筆的文字記錄之外，將文字紀錄堆疊由上而下，逐一移除再堆疊到臨時堆疊之中
                     Stack<string> tempStack = new Stack<string>();
                     for (int i = 0; i < MaxHistoryCount; i++)
                     {
-                        tempStack.Push(textHistory.Pop());
+                        tempStack.Push(undoStack.Pop());
                     }
-                    textHistory.Clear(); // 清空堆疊
-                                         // 文字編輯堆疊紀錄清空之後，再將暫存堆疊（tempStack）中的資料，逐一放回到文字編輯堆疊紀錄
+                    undoStack.Clear(); // 清空堆疊
+                                       // 文字編輯堆疊紀錄清空之後，再將暫存堆疊（tempStack）中的資料，逐一放回到文字編輯堆疊紀錄
                     foreach (string item in tempStack)
                     {
-                        textHistory.Push(item);
+                        undoStack.Push(item);
                     }
                 }
                 UpdateListBox(); // 更新 ListBox
-
-              /*使用 List<string>
-              if (!isUndo)
-              {
-                  textHistory.Add(rtbText.Text);
-
-                  // 超過最大筆數時，移除最舊的一筆（第一筆）
-                  if (textHistory.Count > MaxHistoryCount)
-                  {
-                      textHistory.RemoveAt(0);
-                  }
-
-                  UpdateListBox();
-             */
             }
+
+            /*使用 List<string>
+            if (!isUndo)
+            {
+                textHistory.Add(rtbText.Text);
+
+                // 超過最大筆數時，移除最舊的一筆（第一筆）
+                if (textHistory.Count > MaxHistoryCount)
+                {
+                    textHistory.RemoveAt(0);
+                }
+
+                UpdateListBox();
+           */
         }
 
         // 更新 ListBox
