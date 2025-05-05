@@ -19,7 +19,8 @@ namespace NotePad
         }
 
         // 全域變數
-        private Stack<string> textHistory = new Stack<string>();
+        private Stack<string> undoStack = new Stack<string>(); //回復（undo）堆疊
+        private Stack<string> redoStack = new Stack<string>(); //重作（redo）堆疊
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
         private bool isUndoRedo = false; // 是否為撤銷操作
         /*
@@ -209,7 +210,7 @@ namespace NotePad
             listUndo.Items.Clear(); // 清空 ListBox 中的元素
 
             // 將堆疊中的內容逐一添加到 ListBox 中
-            foreach (string item in textHistory)
+            foreach (string item in undoStack)
             {
                 listUndo.Items.Add(item);
             }
