@@ -16,6 +16,11 @@ namespace NotePad
         public Form1()
         {
             InitializeComponent();
+
+            // 加入以下三行
+            InitializeFontComboBox();
+            InitializeFontSizeComboBox();
+            InitializeFontStyleComboBox();
         }
 
         // 全域變數
@@ -204,7 +209,7 @@ namespace NotePad
            */
         }
 
-        // 更新 ListBox
+        // 更新 ListBox(函式)
         void UpdateListBox()
         {
             listUndo.Items.Clear(); // 清空 ListBox 中的元素
@@ -216,6 +221,62 @@ namespace NotePad
             }
         }
 
+        // 初始化字體下拉選單
+        private void InitializeFontComboBox()
+        {
+            // 將所有系統字體名稱添加到字體選擇框中
+            foreach (FontFamily font in FontFamily.Families)
+            {
+                comboBoxFont.Items.Add(font.Name); //Items是(集合)
+            }
+
+            /*
+            // 設置預設選中的項目為第一個字體(原本方法)
+            comboBoxFont.SelectedIndex = 0;
+            */
+            //也可以這樣玩(額外方法)
+            comboBoxFont.SelectedIndex = comboBoxFont.Items.Count -1;
+        }
+
+        // 初始化字體大小下拉選單
+        private void InitializeFontSizeComboBox()
+        {
+            // 從8開始，每次增加2，直到72，將這些數值添加到字體大小選擇框中(迴圈做法)
+            for (int i = 8; i <= 72; i += 2)
+            {
+                comboBoxSize.Items.Add(i); //Items是(集合)
+            }
+            /*(手動加入作法)
+              comboBoxSize.Items.Add(8);
+              comboBoxSize.Items.Add(10);
+              comboBoxSize.Items.Add(12);
+              '''                          //以此類推，在寫出32個
+              comboBoxSize.Items.Add(72);
+            */
+
+            // 設置預設選中的項目為第三個大小，即12字體大小
+            comboBoxSize.SelectedIndex = 2;
+        }
+
+        // 初始化字體樣式下拉選單(手動加入，不可用迴圈做)
+        private void InitializeFontStyleComboBox()
+        {
+            // 將不同的字體樣式添加到字體樣式選擇框中(手動加入做法)
+            comboBoxStyle.Items.Add(FontStyle.Regular.ToString());   // 正常(標準字體)
+            comboBoxStyle.Items.Add(FontStyle.Bold.ToString());      // 粗體
+            comboBoxStyle.Items.Add(FontStyle.Italic.ToString());    // 斜體
+            comboBoxStyle.Items.Add(FontStyle.Underline.ToString()); // 底線
+            comboBoxStyle.Items.Add(FontStyle.Strikeout.ToString()); // 刪除線
+        /*(迴圈做法)                          
+            foreach (FontStyle style in Enum.GetValues(typeof(FontStyle)))
+            {
+                comboBoxStyle.Items.Add(style.ToString());
+            }
+        */
+
+            // 設置預設選中的項目為第一個樣式，即正常字體
+            comboBoxStyle.SelectedIndex = 0;
+        }
         private void btnUndo_Click(object sender, EventArgs e)
         {
             if (undoStack.Count > 1)
