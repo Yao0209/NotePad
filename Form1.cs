@@ -359,7 +359,14 @@ private void btnSave_Click(object sender, EventArgs e)
             // 將 memoryStream 放入回復堆疊
             undoStack.Push(memoryStream);
         }
-
+        // 將文字狀態從記憶體中顯示到 RichTextBox
+        private void LoadFromMemory(MemoryStream memoryStream)
+        {
+            // 將 memoryStream 的指標重置到開始位置
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            // 將 memoryStream 的內容放到到 RichTextBox
+            rtbText.LoadFile(memoryStream, RichTextBoxStreamType.RichText);
+        }
         private void btnUndo_Click(object sender, EventArgs e)
         {
             if (undoStack.Count > 1)
