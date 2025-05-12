@@ -42,7 +42,7 @@ namespace NotePad
             // 設置對話方塊標題
             openFileDialog1.Title = "選擇檔案";
             // 設置對話方塊篩選器，限制使用者只能選擇特定類型的檔案
-            openFileDialog1.Filter = "Word檔案 (*.docx)|*.docx|文字檔案 (*.txt)|*.txt|所有檔案 (*.*)|*.*";
+            openFileDialog1.Filter = "RTF格式檔案 (*.rtf)|*.rtf|文字檔案 Word檔案 (*.docx)|*.docx|文字檔案 (*.txt)|*.txt|所有檔案 (*.*)|*.*";
             // 如果希望預設開啟的檔案類型是文字檔案，可以這樣設置
             openFileDialog1.FilterIndex = 1;
             // 如果希望對話方塊在開啟時顯示的初始目錄，可以設置 InitialDirectory
@@ -62,35 +62,46 @@ namespace NotePad
                     // 使用者在OpenFileDialog選擇的檔案
                     string selectedFileName = openFileDialog1.FileName;  // 取得選擇的檔案位置
 
-                    /*
-                      // 第一種作法:使用 FileStream 打開檔案 (手動開關資源，基本概念)
-                      // 建立一個檔案資料流，並且設定檔案名稱與檔案開啟模式為「開啟檔案」
-                      FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read);
-                     // 讀取資料流
-                      StreamReader streamReader = new StreamReader(fileStream);
-                     // 將檔案內容顯示到 RichTextBox 中
-                      rtbText.Text = streamReader.ReadToEnd();
-                     // 關閉資料流與讀取資料流
-                      fileStream.Close();
-                      streamReader.Close();
-                    */
+                    // 獲取文件的副檔名
+                    string fileExtension = Path.GetExtension(selectedFileName).ToLower();
 
-                    // 第二種作法:使用 using 與 FileStream 打開檔案 使用 (using 語法可以自動管理資源，較通用)，using語法會自動關閉資源 = Close
-                    using (FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read))
+                    // 判斷副檔名是甚麼格式
+                    if (fileExtension == ".txt")
                     {
-                        // 使用 StreamReader 讀取檔案內容
-                        using (StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8))
-                        {
-                            // 將檔案內容顯示到 RichTextBox 中
-                            rtbText.Text = streamReader.ReadToEnd();
-                        }
-                    }
+                        /*
+                          // 第一種作法:使用 FileStream 打開檔案 (手動開關資源，基本概念)
+                          // 建立一個檔案資料流，並且設定檔案名稱與檔案開啟模式為「開啟檔案」
+                          FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read);
+                         // 讀取資料流
+                          StreamReader streamReader = new StreamReader(fileStream);
+                         // 將檔案內容顯示到 RichTextBox 中
+                          rtbText.Text = streamReader.ReadToEnd();
+                         // 關閉資料流與讀取資料流
+                          fileStream.Close();
+                          streamReader.Close();
+                        */
 
-                    /* 
-                      // 第三種作法:更為簡單的做法，將檔案內容顯示到 RichTextBox 中 (最簡潔的方式)
-                      string fileContent = File.ReadAllText(selectedFileName);
-                      rtbText.Text = fileContent;
-                    */
+                        // 第二種作法:使用 using 與 FileStream 打開檔案 使用 (using 語法可以自動管理資源，較通用)，using語法會自動關閉資源 = Close
+                        using (FileStream fileStream = new FileStream(selectedFileName, FileMode.Open, FileAccess.Read))
+                        {
+                            // 使用 StreamReader 讀取檔案內容
+                            using (StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8))
+                            {
+                                // 將檔案內容顯示到 RichTextBox 中
+                                rtbText.Text = streamReader.ReadToEnd();
+                            }
+                        }
+                        /* 
+                        // 第三種作法:更為簡單的做法，將檔案內容顯示到 RichTextBox 中 (最簡潔的方式)
+                           string fileContent = File.ReadAllText(selectedFileName);
+                           rtbText.Text = fileContent;
+                        */
+                    }
+                    else if (fileExtension == ".rtf")
+                    {
+                        // 如果是RTF文件，使用RichTextBox的LoadFile方法
+                        rtbText.LoadFile(selectedFileName, RichTextBoxStreamType.RichText);
+                    }
                 }
                 catch (Exception ex)
                 {   //MessageBox的語法：MessageBox.Show(要顯示的訊息, 視窗標題, 按鍵組合, 小圖示, 預設按鍵);
@@ -107,13 +118,14 @@ namespace NotePad
             }
         }
 
-        // 儲存檔案的程式碼
-        private void btnSave_Click(object sender, EventArgs e)
+
+// 儲存檔案的程式碼
+private void btnSave_Click(object sender, EventArgs e)
         {
             // 設置對話方塊標題
             saveFileDialog1.Title = "儲存檔案";
             // 設置對話方塊篩選器，限制使用者只能選擇特定類型的檔案去做儲存
-            saveFileDialog1.Filter = "Word檔案 (*.docx)|*.docx|文字檔案 (*.txt)|*.txt|所有檔案 (*.*)|*.*";
+            saveFileDialog1.Filter = "RTF格式檔案 (*.rtf)|*.rtf|文字檔案 Word檔案 (*.docx)|*.docx|文字檔案 (*.txt)|*.txt|所有檔案 (*.*)|*.*";
             // 如果希望預設儲存的檔案類型是文字檔案，可以這樣設置
             saveFileDialog1.FilterIndex = 1;
             // 如果希望對話方塊在開啟時顯示的初始目錄，可以設置 InitialDirectory
@@ -132,20 +144,29 @@ namespace NotePad
                 {
                     // 使用者指定的儲存檔案的路徑
                     string saveFileName = saveFileDialog1.FileName;
+                    string extension = Path.GetExtension(saveFileName);
 
                     // 使用 FileStream 建立檔案，如果檔案已存在則覆寫
-                    fileStream = new FileStream(saveFileName, FileMode.Create, FileAccess.Write);
+                    //fileStream = new FileStream(saveFileName, FileMode.Create, FileAccess.Write);
                     // 將 RichTextBox 中的文字寫入檔案中
-                    byte[] data = Encoding.UTF8.GetBytes(rtbText.Text);  // rtbText轉換為UTF8，接著在寫入data
-                    fileStream.Write(data, 0, data.Length);
+                    //byte[] data = Encoding.UTF8.GetBytes(rtbText.Text);  // rtbText轉換為UTF8，接著在寫入data
+                    //fileStream.Write(data, 0, data.Length);
 
-                    //// 使用 using 與 FileStream 建立檔案，如果檔案已存在則覆寫
-                    //using (fileStream = new FileStream(saveFileName, FileMode.Create, FileAccess.Write))
-                    //{
-                    //    // 將 RichTextBox 中的文字寫入檔案中
-                    //    byte[] data = Encoding.UTF8.GetBytes(rtbText.Text);
-                    //    fileStream.Write(data, 0, data.Length);
-                    //}
+                    // 使用 using 與 FileStream 建立檔案，如果檔案已存在則覆寫
+                    using (fileStream = new FileStream(saveFileName, FileMode.Create, FileAccess.Write))
+                    {
+                        if (extension.ToLower() == ".txt")
+                        {
+                            // 將 RichTextBox 中的文字寫入檔案中
+                            byte[] data = Encoding.UTF8.GetBytes(rtbText.Text);
+                            fileStream.Write(data, 0, data.Length);
+                        }
+                        else if (extension.ToLower() == ".rtf")
+                        {
+                            // 將RichTextBox中的內容保存為RTF格式
+                            rtbText.SaveFile(fileStream, RichTextBoxStreamType.RichText);
+                        }
+                    }
 
                     //// 將 RichTextBox 中的文字儲存到檔案中
                     //File.WriteAllText(saveFileName, rtbText.Text);
@@ -155,7 +176,7 @@ namespace NotePad
                 catch (Exception ex)
                 {
                     // 如果發生錯誤，用 MessageBox 顯示錯誤訊息
-                    MessageBox.Show("儲存檔案時發生錯誤: " + ex.Message, "錯誤訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("儲存檔案時發生錯誤: " + ex.Message, "錯誤訊息", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally // 定義:finally區塊無論try區塊是否發生錯誤都會執行程式碼
                 {
