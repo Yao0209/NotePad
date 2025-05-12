@@ -349,6 +349,16 @@ private void btnSave_Click(object sender, EventArgs e)
             rtbText.Focus();
             rtbText.Select(selectionStart, selectionLength);
         }
+        // 將文字編輯狀態保存到回復堆疊
+        private void SaveCurrentStateToStack()
+        {
+            // 創建一個新的 MemoryStream 來保存文字編輯狀態
+            MemoryStream memoryStream = new MemoryStream();
+            // 將 RichTextBox 的內容保存到 memoryStream
+            rtbText.SaveFile(memoryStream, RichTextBoxStreamType.RichText);
+            // 將 memoryStream 放入回復堆疊
+            undoStack.Push(memoryStream);
+        }
 
         private void btnUndo_Click(object sender, EventArgs e)
         {
