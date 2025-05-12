@@ -119,8 +119,8 @@ namespace NotePad
         }
 
 
-// 儲存檔案的程式碼
-private void btnSave_Click(object sender, EventArgs e)
+        // 儲存檔案的程式碼
+        private void btnSave_Click(object sender, EventArgs e)
         {
             // 設置對話方塊標題
             saveFileDialog1.Title = "儲存檔案";
@@ -195,27 +195,28 @@ private void btnSave_Click(object sender, EventArgs e)
             // 只有當isUndo這個變數是false的時候，才能堆疊文字編輯紀錄
             if (isUndoRedo == false)
             {
-                undoStack.Push(rtbText.Text); // 將當前的文本內容加入堆疊
+                SaveCurrentStateToStack(); // 將當前的文本內容加入堆疊
                 redoStack.Clear();            // 清空重作堆疊
 
                 // 確保堆疊中只保留最多10個紀錄
                 if (undoStack.Count > MaxHistoryCount)
                 {
                     // 用一個臨時堆疊，將除了最下面一筆的文字記錄之外，將文字紀錄堆疊由上而下，逐一移除再堆疊到臨時堆疊之中
-                    Stack<string> tempStack = new Stack<string>();
+                    Stack<MemoryStream> tempStack = new Stack<MemoryStream>();
                     for (int i = 0; i < MaxHistoryCount; i++)
                     {
                         tempStack.Push(undoStack.Pop());
                     }
                     undoStack.Clear(); // 清空堆疊
                                        // 文字編輯堆疊紀錄清空之後，再將暫存堆疊（tempStack）中的資料，逐一放回到文字編輯堆疊紀錄
-                    foreach (string item in tempStack)
+                    foreach (MemoryStream item in tempStack)
                     {
                         undoStack.Push(item);
                     }
                 }
                 UpdateListBox(); // 更新 ListBox
             }
+        }
 
             /*使用 List<string>
             if (!isUndo)
@@ -229,8 +230,10 @@ private void btnSave_Click(object sender, EventArgs e)
                 }
 
                 UpdateListBox();
+
+            }
            */
-        }
+        
 
         // 更新 ListBox(函式)
         void UpdateListBox()
@@ -238,7 +241,7 @@ private void btnSave_Click(object sender, EventArgs e)
             listUndo.Items.Clear(); // 清空 ListBox 中的元素
 
             // 將堆疊中的內容逐一添加到 ListBox 中
-            foreach (string item in undoStack)
+            foreach (MemoryStream item in undoStack)
             {
                 listUndo.Items.Add(item);
             }
@@ -258,7 +261,7 @@ private void btnSave_Click(object sender, EventArgs e)
             comboBoxFont.SelectedIndex = 0;
             */
             //也可以這樣玩(額外方法)
-            comboBoxFont.SelectedIndex = comboBoxFont.Items.Count -1;
+            comboBoxFont.SelectedIndex = comboBoxFont.Items.Count - 1;
         }
 
         // 初始化字體大小下拉選單
@@ -290,12 +293,12 @@ private void btnSave_Click(object sender, EventArgs e)
             comboBoxStyle.Items.Add(FontStyle.Italic.ToString());    // 斜體
             comboBoxStyle.Items.Add(FontStyle.Underline.ToString()); // 底線
             comboBoxStyle.Items.Add(FontStyle.Strikeout.ToString()); // 刪除線
-        /*(迴圈做法)                          
-            foreach (FontStyle style in Enum.GetValues(typeof(FontStyle)))
-            {
-                comboBoxStyle.Items.Add(style.ToString());
-            }
-        */
+            /*(迴圈做法)                          
+                foreach (FontStyle style in Enum.GetValues(typeof(FontStyle)))
+                {
+                    comboBoxStyle.Items.Add(style.ToString());
+                }
+            */
 
             // 設置預設選中的項目為第一個樣式，即正常字體
             comboBoxStyle.SelectedIndex = 0;
@@ -373,27 +376,30 @@ private void btnSave_Click(object sender, EventArgs e)
             {
                 isUndoRedo = true;
                 redoStack.Push(undoStack.Pop()); // 將回復堆疊最上面的紀錄移出，再堆到重作堆疊
-                rtbText.Text = undoStack.Peek(); // 將回復堆疊最上面一筆紀錄顯示
+                MemoryStream lastSavedState = undoStack.Peek(); // 將回復堆疊最上面一筆紀錄顯示
+                LoadFromMemory(lastSavedState);
                 UpdateListBox();
                 isUndoRedo = false;
             }
-
-                /*使用 List<string>
-                isUndo = true;
-
-                if (textHistory.Count > 1)
-                {
-                    // 移除目前的內容（最後一筆）
-                    textHistory.RemoveAt(textHistory.Count - 1);
-
-                    // 還原為上一筆內容
-                    rtbText.Text = textHistory[^1]; // C# 8.0+ 語法，相當於 textHistory[textHistory.Count - 1]
-                }
-
-                UpdateListBox();
-                isUndo = false;
-                */
         }
+
+        /*使用 List<string>
+        isUndo = true;
+
+        if (textHistory.Count > 1)
+        {
+            // 移除目前的內容（最後一筆）
+            textHistory.RemoveAt(textHistory.Count - 1);
+
+            // 還原為上一筆內容
+            rtbText.Text = textHistory[^1]; // C# 8.0+ 語法，相當於 textHistory[textHistory.Count - 1]
+        }
+
+        UpdateListBox();
+        isUndo = false;
+        */
+    
+
 
         private void btnRedo_Click(object sender, EventArgs e)
         {
@@ -401,11 +407,13 @@ private void btnSave_Click(object sender, EventArgs e)
             {
                 isUndoRedo = true;
                 undoStack.Push(redoStack.Pop()); // 將重作堆疊最上面的紀錄移出，再堆到回復堆疊
-                rtbText.Text = undoStack.Peek(); // 將回復堆疊最上面一筆紀錄顯示
+                MemoryStream lastSavedState = undoStack.Peek(); // 將回復堆疊最上面一筆紀錄顯示
+                LoadFromMemory(lastSavedState);
                 UpdateListBox();
                 isUndoRedo = false;
             }
         }
-    } 
+    }
 }
+
 
