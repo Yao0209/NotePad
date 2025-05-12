@@ -47,7 +47,7 @@
             this.rtbText.Font = new System.Drawing.Font("標楷體", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.rtbText.Location = new System.Drawing.Point(6, 56);
             this.rtbText.Name = "rtbText";
-            this.rtbText.Size = new System.Drawing.Size(1082, 764);
+            this.rtbText.Size = new System.Drawing.Size(1092, 776);
             this.rtbText.TabIndex = 0;
             this.rtbText.Text = "";
             this.rtbText.TextChanged += new System.EventHandler(this.rtbText_TextChanged);
@@ -55,10 +55,10 @@
             // btnOpen
             // 
             this.btnOpen.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnOpen.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnOpen.Location = new System.Drawing.Point(1094, 56);
+            this.btnOpen.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnOpen.Location = new System.Drawing.Point(1104, 56);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(157, 69);
+            this.btnOpen.Size = new System.Drawing.Size(231, 69);
             this.btnOpen.TabIndex = 1;
             this.btnOpen.Text = "開啟檔案";
             this.btnOpen.UseVisualStyleBackColor = true;
@@ -72,9 +72,9 @@
             // 
             this.btnSave.BackColor = System.Drawing.Color.Red;
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnSave.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSave.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnSave.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnSave.Location = new System.Drawing.Point(1257, 56);
+            this.btnSave.Location = new System.Drawing.Point(1337, 56);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(161, 69);
             this.btnSave.TabIndex = 2;
@@ -87,18 +87,18 @@
             this.listUndo.Font = new System.Drawing.Font("標楷體", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.listUndo.FormattingEnabled = true;
             this.listUndo.ItemHeight = 29;
-            this.listUndo.Location = new System.Drawing.Point(1094, 229);
+            this.listUndo.Location = new System.Drawing.Point(1104, 248);
             this.listUndo.Name = "listUndo";
-            this.listUndo.Size = new System.Drawing.Size(324, 584);
+            this.listUndo.Size = new System.Drawing.Size(394, 584);
             this.listUndo.TabIndex = 3;
             // 
             // btnUndo
             // 
             this.btnUndo.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnUndo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnUndo.Location = new System.Drawing.Point(1094, 131);
+            this.btnUndo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnUndo.Location = new System.Drawing.Point(1104, 131);
             this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(324, 42);
+            this.btnUndo.Size = new System.Drawing.Size(394, 53);
             this.btnUndo.TabIndex = 4;
             this.btnUndo.Text = "復原上一步";
             this.btnUndo.UseVisualStyleBackColor = true;
@@ -107,10 +107,10 @@
             // btnRedo
             // 
             this.btnRedo.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnRedo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnRedo.Location = new System.Drawing.Point(1094, 179);
+            this.btnRedo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnRedo.Location = new System.Drawing.Point(1104, 190);
             this.btnRedo.Name = "btnRedo";
-            this.btnRedo.Size = new System.Drawing.Size(324, 44);
+            this.btnRedo.Size = new System.Drawing.Size(394, 52);
             this.btnRedo.TabIndex = 5;
             this.btnRedo.Text = "重做下一步";
             this.btnRedo.UseVisualStyleBackColor = true;
@@ -124,6 +124,7 @@
             this.comboBoxFont.Name = "comboBoxFont";
             this.comboBoxFont.Size = new System.Drawing.Size(419, 37);
             this.comboBoxFont.TabIndex = 6;
+            this.comboBoxFont.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // comboBoxSize
             // 
@@ -133,6 +134,7 @@
             this.comboBoxSize.Name = "comboBoxSize";
             this.comboBoxSize.Size = new System.Drawing.Size(147, 37);
             this.comboBoxSize.TabIndex = 7;
+            this.comboBoxSize.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // comboBoxStyle
             // 
@@ -142,12 +144,13 @@
             this.comboBoxStyle.Name = "comboBoxStyle";
             this.comboBoxStyle.Size = new System.Drawing.Size(233, 37);
             this.comboBoxStyle.TabIndex = 8;
+            this.comboBoxStyle.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1416, 824);
+            this.ClientSize = new System.Drawing.Size(1504, 836);
             this.Controls.Add(this.comboBoxStyle);
             this.Controls.Add(this.comboBoxSize);
             this.Controls.Add(this.comboBoxFont);
