@@ -24,8 +24,8 @@ namespace NotePad
         }
 
         // 全域變數
-        private Stack<string> undoStack = new Stack<string>(); //回復（undo）堆疊
-        private Stack<string> redoStack = new Stack<string>(); //重作（redo）堆疊
+        private Stack<MemoryStream> undoStack = new Stack<MemoryStream>(); //回復（undo）堆疊
+        private Stack<MemoryStream> redoStack = new Stack<MemoryStream>(); //重作（redo）堆疊
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
         private bool isUndoRedo = false; // 是否為撤銷操作
         private int selectionStart = 0;                            // 記錄文字反白的起點
