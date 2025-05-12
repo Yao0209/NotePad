@@ -28,6 +28,8 @@ namespace NotePad
         private Stack<string> redoStack = new Stack<string>(); //重作（redo）堆疊
         private const int MaxHistoryCount = 10; // 最多紀錄10個紀錄
         private bool isUndoRedo = false; // 是否為撤銷操作
+        private int selectionStart = 0;                            // 記錄文字反白的起點
+        private int selectionLength = 0;                           // 記錄文字反白的長度
         /*
           第二種方法使用:List<string>
         private List<string> textHistory = new List<string>();
@@ -280,7 +282,11 @@ namespace NotePad
         // 這個方法在 comboBox 的選項變更時觸發
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 檢查當前選擇的文字是否有字型，如果有，則進行後續處理
+            // 保存當前選擇的文字起始位置和長度
+            selectionStart = rtbText.SelectionStart;
+            selectionLength = rtbText.SelectionLength;
+
+            // 確保當前選擇的文字具有字型
             if (rtbText.SelectionFont != null)
             {
                 // 從下拉選單中獲取選擇的字型、大小和樣式
@@ -317,6 +323,10 @@ namespace NotePad
                     rtbText.SelectionFont = newFont;
                 }
             }
+
+            // 恢復選擇狀態
+            rtbText.Focus();
+            rtbText.Select(selectionStart, selectionLength);
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
